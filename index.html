@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>Rock Paper Scissors!</title>
+    </head>
+
+    <body>
+    <script>
+        function computerPlay() {
+            let value = Math.random();
+            let choice;
+            if (value < 0.33) {
+                choice = "Rock";
+            } else if (value >= 0.33 || value < 0.66) {
+                choice = "Paper";
+            } else {
+                chioce = "Scissors";
+            }
+
+            return choice;
+        }
+
+        function playerPlay() {
+            let choice = prompt("What's your move? ");
+            return choice;
+        }
+
+        /**
+            Play a round between a player and the computer. 
+
+            Function returns:
+            -1 if player wins
+            0 if draw
+            1 if computer wins
+        **/
+        function playRound(playerSelection, computerSelection) {
+            let outcome;
+            playerSelection = playerSelection.toLowerCase();
+            computerSelection = computerSelection.toLowerCase();
+
+            // input checking
+            if (playerSelection != "scissors" && 
+                playerSelection != "rock" &&
+                playerSelection != "paper") {
+
+                console.log("Bad move");
+                outcome = 1;
+
+            // draw condition
+            } else if (playerSelection == computerSelection) {
+                outcome = 0;
+
+            // game logic
+            } else if (playerSelection == "rock") {
+                if (computerSelection == "scissors") {
+                    outcome =  -1; // player wins
+
+                } else if (computerSelection == "paper") {
+                    outcome = 1; // computer wins
+
+                }
+
+            } else if (playerSelection == "scissors") {
+                if (computerSelection == "rock") {
+                    outcome = 1; // computer wins
+
+                } else if (computerSelection == "paper") {
+                    outcome = -1; // player wins
+
+                }
+
+            } else { // player chose paper
+                if (computerSelection == "rock") {
+                    outcome = -1; // player wins
+
+                } else if (computerSelection == "scissors") {
+                    outcome = 1; // computer wins
+                }
+            }
+
+            return outcome;
+        }
+
+        function game() {
+            let round = 5;
+            let computerPoints = 0;
+            let playerPoints = 0;
+
+            while (round > 0) {
+                let playerSelection = playerPlay();
+                let computerSelection = computerPlay();
+
+                let result = playRound(playerSelection, computerSelection);
+
+                if (result == 1) {
+                    // computer wins
+                    computerPoints++;
+                    console.log("Computer won that round");
+                } else if (result == -1) {
+                    // player wins
+                    playerPoints++;
+                    console.log("Player won that round");
+                } else {
+                    // draw round
+                    console.log("That round was a draw");
+                }
+
+                round--;
+            }
+
+            console.log("The score is: Computer-" + computerPoints + " Human-" + playerPoints);
+            if (computerPoints > playerPoints) {
+                console.log("The computer won the game!");
+            } else if (playerPoints > computerPoints)  {
+                console.log("The human won the game!");
+            } else {
+                console.log("The game was a draw.");
+            }
+        }
+    </script>
+    </body>
+
+</html>
